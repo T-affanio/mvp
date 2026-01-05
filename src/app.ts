@@ -9,5 +9,5 @@ app.use(cors());
 app.use(express.json()); // 🚨 OBRIGATÓRIO
 app.use(express.urlencoded({ extended: true }));
 app.use(mainRoute);
-startStoreStatusJob();
+// startStoreStatusJob();
 
