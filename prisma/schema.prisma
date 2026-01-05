@@ -1,0 +1,262 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+///////////////////////////////////////
+// 👤 ADMIN
+///////////////////////////////////////
+
+model Admin {
+  id       String    @id @default(uuid())
+  name     String
+  email    String    @unique
+  password String
+  role     AdminRole @default(OWNER)
+  address  String
+
+  createdAt DateTime @default(now())
+}
+
+///////////////////////////////////////
+// 📂 CATEGORIA
+///////////////////////////////////////
+
+model Category {
+  id   String @id @default(uuid())
+  name String
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+}
+
+///////////////////////////////////////
+// 🍕 PRODUTO (BASE)
+///////////////////////////////////////
+
+model Product {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  price       Float        // preço base / fallback
+  active      Boolean @default(true)
+
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  variations ProductVariation[]   // 👈 TAMANHOS / VARIAÇÕES
+  images     ProductImage[]
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  promotionProducts   PromotionProduct[]
+  promotionComboItems PromotionComboItem[]
+
+  @@index([active])
+}
+
+///////////////////////////////////////
+// 📐 VARIAÇÃO (TAMANHO / PREÇO)
+///////////////////////////////////////
+
+model ProductVariation {
+  id        String @id @default(uuid())
+  name      String   // Pequena, Média, Grande, 500g
+  price     Float
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+///////////////////////////////////////
+// 🖼️ IMAGEM
+///////////////////////////////////////
+
+model ProductImage {
+  id  String @id @default(uuid())
+  url String
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+///////////////////////////////////////
+// 🧾 PEDIDO
+///////////////////////////////////////
+
+model Order {
+  id String @id @default(uuid())
+
+  customerName  String
+  customerPhone String
+
+  deliveryType  DeliveryType
+  paymentMethod PaymentMethod
+
+  address      String?
+  neighborhood String?
+
+  deliveryAreaId String?
+  deliveryArea   DeliveryArea? @relation(fields: [deliveryAreaId], references: [id])
+
+  deliveryFee Float?
+
+  subtotal Float
+  total    Float
+
+  status OrderStatus @default(PENDING)
+  items  OrderItem[]
+
+  createdAt DateTime @default(now())
+}
+
+///////////////////////////////////////
+// 📦 ITEM DO PEDIDO
+///////////////////////////////////////
+
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
+  productId String
+  variationId String?   // 👈 VARIAÇÃO ESCOLHIDA
+
+  productName   String
+  variationName String?
+  flavors       String? // "Calabresa, Frango"
+
+  originalPrice Float?
+  unitPrice     Float
+  quantity      Int
+  subtotal      Float
+
+  promotionId String?
+  promotion   Promotion? @relation(fields: [promotionId], references: [id])
+
+  product Product @relation(fields: [productId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+///////////////////////////////////////
+// 📍 ÁREA DE ENTREGA
+///////////////////////////////////////
+
+model DeliveryArea {
+  id             String @id @default(uuid())
+  name           String
+  nameNormalized String @unique
+  fee            Float
+
+  orders Order[]
+}
+
+///////////////////////////////////////
+// 🎯 PROMOÇÕES
+///////////////////////////////////////
+
+model Promotion {
+  id     String        @id @default(cuid())
+  name   String
+  type   PromotionType
+  active Boolean       @default(true)
+
+  discountType  DiscountType?
+  discountValue Float?
+
+  startAt DateTime?
+  endAt   DateTime?
+
+  createdAt DateTime @default(now())
+
+  products   PromotionProduct[]
+  combos     PromotionCombo[]
+  orderItems OrderItem[]
+}
+
+model PromotionProduct {
+  id          String @id @default(cuid())
+  promotionId String
+  productId   String
+
+  promotion Promotion @relation(fields: [promotionId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id])
+}
+
+model PromotionCombo {
+  id          String @id @default(cuid())
+  promotionId String
+  price       Float
+
+  promotion Promotion            @relation(fields: [promotionId], references: [id])
+  items     PromotionComboItem[]
+}
+
+model PromotionComboItem {
+  id        String @id @default(cuid())
+  comboId   String
+  productId String
+  quantity  Int
+
+  combo   PromotionCombo @relation(fields: [comboId], references: [id])
+  product Product        @relation(fields: [productId], references: [id])
+}
+
+
+model StoreSettings {
+  id             String   @id @default(uuid())
+  isOpen         Boolean
+  acceptOrders   Boolean
+  manuallyPaused Boolean   @default(false)
+  openingHours   Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+
+///////////////////////////////////////
+// 🔖 ENUMS
+///////////////////////////////////////
+
+enum PromotionType {
+  PRODUCT
+  COMBO
+}
+
+enum DiscountType {
+  FIXED
+  PERCENT
+}
+
+enum DeliveryType {
+  DELIVERY
+  PICKUP
+}
+
+enum PaymentMethod {
+  PIX
+  CASH
+  CARD
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  FINISHED
+  CANCELED
+}
+
+enum AdminRole {
+  OWNER
+  MANAGER
+  STAFF
+}

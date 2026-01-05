@@ -1,0 +1,55 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\.ec0f7c20d0cea075d9a83b8211c0d50b45256d24-audit.json",
+    "files": [
+        {
+            "date": 1766492738293,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2025-12-23.log",
+            "hash": "1d050c67444f7d1f6f24a19241e43e9bd6a184820ff46fb0399c9d0e5a7591b7"
+        },
+        {
+            "date": 1767008688088,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2025-12-29.log",
+            "hash": "9818b4fe3759bfd9c79d91aee304370a4ac9fedfc8bec3aa68fea0db580f6020"
+        },
+        {
+            "date": 1767095230680,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2025-12-30.log",
+            "hash": "b166e3a8dee1c53ed82cc0b340d2190af7a6b52081b7fd080dcc1041ae6ecf1d"
+        },
+        {
+            "date": 1767183847612,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2025-12-31.log",
+            "hash": "77f997eb4250a912dfc48c1c8bd1c2b04d4283ccb88e8475055435281ded78eb"
+        },
+        {
+            "date": 1767279417585,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2026-01-01.log",
+            "hash": "8ae6820ff4745927569e2d964eadf4dc4049cdeae851f94b5b93e74057af70f1"
+        },
+        {
+            "date": 1767357581883,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2026-01-02.log",
+            "hash": "f4d142d3dc4982ecb839f2b73a63c070576998479f7c8d1d4815e802556542bc"
+        },
+        {
+            "date": 1767443818246,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2026-01-03.log",
+            "hash": "5d3669fa6ec8a643691fe431a21517f6491cc5843481efc7a8fa2411a02abc80"
+        },
+        {
+            "date": 1767540125160,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2026-01-04.log",
+            "hash": "3e736c9c33271d9f6d78173acdf16a029de3a8ffdb073acfab78830f0657098d"
+        },
+        {
+            "date": 1767621022375,
+            "name": "C:\\Users\\BTA\\Desktop\\PJ\\THDELIVERY\\backend\\logs\\app-2026-01-05.log",
+            "hash": "48af6ac99b20c811c3d773e4ed5084205af268f326040faf2cfab085bf05b1f9"
+        }
+    ],
+    "hashType": "sha256"
+}
