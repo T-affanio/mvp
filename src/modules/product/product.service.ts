@@ -38,7 +38,11 @@ export class ProductService {
 
     logger.info("[ProductService] Criando produto");
 
-    return this.repo.create(data);
+   return this.repo.create({
+  ...data,
+  variations: data.variations ?? [],
+});
+
   }
   async listMostOrdered() {
     return this.repo.findMostOrdered();

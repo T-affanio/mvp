@@ -9,7 +9,15 @@
 * 🟢 You can import this file directly.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminRole = exports.OrderStatus = exports.PaymentMethod = exports.DeliveryType = void 0;
+exports.AdminRole = exports.OrderStatus = exports.PaymentMethod = exports.DeliveryType = exports.DiscountType = exports.PromotionType = void 0;
+exports.PromotionType = {
+    PRODUCT: 'PRODUCT',
+    COMBO: 'COMBO'
+};
+exports.DiscountType = {
+    FIXED: 'FIXED',
+    PERCENT: 'PERCENT'
+};
 exports.DeliveryType = {
     DELIVERY: 'DELIVERY',
     PICKUP: 'PICKUP'

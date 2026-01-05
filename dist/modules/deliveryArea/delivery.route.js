@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deliveryAreaRoutes = void 0;
+const express_1 = require("express");
+const delivery_controller_1 = require("./delivery.controller");
+const ensureAuth_1 = require("../../shared/middleware/ensureAuth");
+const router = (0, express_1.Router)();
+exports.deliveryAreaRoutes = router;
+const controller = new delivery_controller_1.DeliveryAreaController();
+router.post("/", ensureAuth_1.ensureAuth, controller.create.bind(controller));
+router.get("/", controller.list.bind(controller));
+router.delete("/:id", controller.delete.bind(controller));
+router.put("/:id", ensureAuth_1.ensureAuth, controller.update.bind(controller));

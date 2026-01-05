@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const promotion_controller_1 = require("./promotion.controller");
+const ensureAuth_1 = require("../../shared/middleware/ensureAuth");
+const promotionRouter = (0, express_1.Router)();
+const controller = new promotion_controller_1.PromotionController();
+promotionRouter.post("/product", controller.createProduct.bind(controller));
+promotionRouter.post("/combo", controller.createCombo.bind(controller));
+promotionRouter.get("/", controller.list.bind(controller));
+promotionRouter.patch("/:id/status", ensureAuth_1.ensureAuth, controller.toggle.bind(controller));
+promotionRouter.delete("/:id", ensureAuth_1.ensureAuth, controller.delete.bind(controller));
+promotionRouter.get("/active", controller.listActive.bind(controller));
+exports.default = promotionRouter;

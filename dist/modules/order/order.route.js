@@ -1,1 +1,12 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.orderRoutes = void 0;
+const express_1 = require("express");
+const order_controller_1 = require("./order.controller");
+const ensureAuth_1 = require("../../shared/middleware/ensureAuth");
+exports.orderRoutes = (0, express_1.Router)();
+const controller = new order_controller_1.OrderController();
+exports.orderRoutes.post("/", controller.create.bind(controller));
+exports.orderRoutes.get("/", controller.list.bind(controller));
+// orderRoutes.get("/most-ordered", controller.mostOrdered.bind(controller));
+exports.orderRoutes.patch("/:id/status", ensureAuth_1.ensureAuth, controller.updateStatus.bind(controller));
